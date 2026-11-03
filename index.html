@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hélice Drone | Servicio Aéreo Profesional</title>
+  <meta name="description" content="Hélice Drone: tomas aéreas cinematográficas en HD desde Villa María, Córdoba. Video para inmobiliarias, eventos privados, viajes y turismo. Presupuesto por WhatsApp." />
+  <meta name="theme-color" content="#0e0e12" />
+  <link rel="canonical" href="https://helicedrone.com.ar/" />
+  <!-- TODO: reemplazar por el dominio real cuando esté publicado, y sumar
+       assets/og-image.jpg (1200x630) con una toma real para la vista previa. -->
+
+  <!-- Open Graph / vista previa al compartir el link (WhatsApp, redes, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:site_name" content="Hélice Drone" />
+  <meta property="og:title" content="Hélice Drone | Servicio Aéreo Profesional" />
+  <meta property="og:description" content="Tomas aéreas cinematográficas en HD: inmobiliarias, eventos privados, viajes y turismo. Con base en Villa María, Córdoba." />
+  <meta property="og:image" content="https://helicedrone.com.ar/assets/og-image.jpg" />
+  <meta property="og:url" content="https://helicedrone.com.ar/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hélice Drone | Servicio Aéreo Profesional" />
+  <meta name="twitter:description" content="Tomas aéreas cinematográficas en HD: inmobiliarias, eventos privados, viajes y turismo." />
+  <meta name="twitter:image" content="https://helicedrone.com.ar/assets/og-image.jpg" />
+
+  <!-- Favicon: el mismo logo del drone del navbar, como SVG embebido (sin archivo aparte) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzBlMGUxMiIvPjxnIHN0cm9rZT0iIzM5ZmY4ZiIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjExIiB5MT0iMTYiIHgyPSI1IiB5Mj0iMTAiLz48bGluZSB4MT0iMjEiIHkxPSIxNiIgeDI9IjI3IiB5Mj0iMTAiLz48bGluZSB4MT0iMTEiIHkxPSIxNiIgeDI9IjUiIHkyPSIyMiIvPjxsaW5lIHgxPSIyMSIgeTE9IjE2IiB4Mj0iMjciIHkyPSIyMiIvPjwvZz48ZWxsaXBzZSBjeD0iNSIgY3k9IjEwIiByeD0iMyIgcnk9IjEuOCIgZmlsbD0iIzM5ZmY4ZiIvPjxlbGxpcHNlIGN4PSIyNyIgY3k9IjEwIiByeD0iMyIgcnk9IjEuOCIgZmlsbD0iIzM5ZmY4ZiIvPjxlbGxpcHNlIGN4PSI1IiBjeT0iMjIiIHJ4PSIzIiByeT0iMS44IiBmaWxsPSIjMzlmZjhmIi8+PGVsbGlwc2UgY3g9IjI3IiBjeT0iMjIiIHJ4PSIzIiByeT0iMS44IiBmaWxsPSIjMzlmZjhmIi8+PHJlY3QgeD0iMTEiIHk9IjEzIiB3aWR0aD0iMTAiIGhlaWdodD0iNiIgcng9IjMiIGZpbGw9IiMzOWZmOGYiLz48L3N2Zz4=" />
+
+  <!-- Animación de entrada (splash): esta clase se decide ANTES del primer
+       paint para que no haya parpadeo. Si el visitante ya la vio en esta
+       pestaña, o prefiere menos movimiento, o no tiene JS, no se agrega y
+       la página se ve normal desde el primer frame (ver #intro-splash en
+       style.css: por defecto está oculto, solo aparece con esta clase). -->
+  <script>
+    (function () {
+      try {
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var introSeen = sessionStorage.getItem('helicedrone-intro-seen');
+        if (!reduceMotion && !introSeen) {
+          document.documentElement.classList.add('js-intro');
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- INTRO / SPLASH DE ENTRADA -->
+  <!-- Oculto por defecto (ver style.css): solo se muestra si <html> tiene
+       la clase "js-intro", agregada por el script del <head>. -->
+  <div id="intro-splash" aria-hidden="true">
+    <img class="intro-logo" src="assets/logo.png" alt="Hélice Drone" width="700" height="483" />
+    <div class="intro-bar"><span></span></div>
+  </div>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a class="whatsapp-float" href="https://wa.me/5493534273691" target="_blank" title="Escribinos por WhatsApp">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="16" fill="#25D366"/>
+      <path d="M23.5 8.5A10.47 10.47 0 0 0 16 5.5C10.75 5.5 6.5 9.75 6.5 15a9.43 9.43 0 0 0 1.4 5L6.5 25.5l5.65-1.38A9.5 9.5 0 0 0 16 24.5c5.25 0 9.5-4.25 9.5-9.5a9.44 9.44 0 0 0-2-5.5zm-7.5 14.6a7.9 7.9 0 0 1-4-.11l-.28-.17-2.93.72.75-2.85-.19-.3A7.88 7.88 0 0 1 8.1 15c0-4.35 3.55-7.9 7.9-7.9A7.9 7.9 0 0 1 23.9 15c0 4.35-3.55 7.1-7.9 7.1zm4.34-5.92c-.24-.12-1.4-.69-1.61-.77-.22-.08-.38-.12-.54.12s-.62.77-.76.93c-.14.16-.28.18-.52.06a6.57 6.57 0 0 1-1.93-1.19 7.2 7.2 0 0 1-1.34-1.66c-.14-.24 0-.37.1-.49.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.46-.4-.4-.54-.4h-.46c-.16 0-.42.06-.64.3s-.84.82-.84 2 .86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28z" fill="white"/>
+    </svg>
+  </a>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <img class="logo-drone" src="assets/logo-icon.png" alt="Hélice Drone" width="320" height="152" />
+      <span class="nav-brand-name">HÉLICE<span>DRONE</span><span class="nav-brand-suffix">mkt</span></span>
+    </div>
+    <div class="navbar-actions">
+      <!-- Acceso directo al blog de turismo Córdoba Especial (sitio aparte en Netlify) -->
+      <a class="nav-blog" href="https://cordobaespecial.netlify.app/" target="_blank" rel="noopener" aria-label="Córdoba Especial, nuestro blog de turismo (se abre en otra pestaña)" title="Córdoba Especial · Blog de turismo">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="17" cy="6.5" r="2.2"/><path d="M2.5 19.5 9 10l3.5 5 2.5-3.5 6.5 8Z"/></svg>
+        <span class="nav-blog-label">Blog</span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">
+        <svg class="nav-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line class="nav-toggle-line nav-toggle-line-top" x1="4" y1="7" x2="20" y2="7"/>
+          <line class="nav-toggle-line nav-toggle-line-mid" x1="4" y1="12" x2="20" y2="12"/>
+          <line class="nav-toggle-line nav-toggle-line-bot" x1="4" y1="17" x2="20" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-scan" aria-hidden="true"></div>
+    <div class="sidebar-header">
+      <div class="sidebar-brand">
+        <img class="sidebar-brand-logo" src="assets/logo-icon.png" alt="" width="320" height="152" />
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-name">HÉLICE<span>DRONE</span></span>
+          <span class="sidebar-status"><i class="sidebar-status-dot" aria-hidden="true"></i>SISTEMA EN LÍNEA</span>
+        </div>
+      </div>
+      <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav class="sidebar-nav" aria-label="Navegación principal">
+
+      <div class="sidebar-group">
+        <div class="sidebar-group-head">
+          <a href="#servicios" class="sidebar-link">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M8.5 8V6.5A1.5 1.5 0 0 1 10 5h4a1.5 1.5 0 0 1 1.5 1.5V8"/><line x1="3" y1="13" x2="21" y2="13"/></svg>
+            Servicios
+          </a>
+          <button class="sidebar-expand" aria-expanded="false" aria-controls="sub-servicios" aria-label="Mostrar subsecciones de Servicios">
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="sidebar-sublinks-wrap" id="sub-servicios">
+          <div class="sidebar-sublinks">
+            <a href="#servicio-tomas">Tomas Aéreas</a>
+            <a href="#servicio-inmobiliaria">Inmobiliarias</a>
+            <a href="#servicio-eventos">Eventos Privados</a>
+            <a href="#servicio-viajes">Viajes &amp; Turismo</a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#marketing" class="sidebar-link" onclick="event.preventDefault(); openMarketingPage();">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="17" r="2.2"/><circle cx="19" cy="17" r="2.2"/><line x1="12" y1="7.2" x2="6.3" y2="15.2"/><line x1="12" y1="7.2" x2="17.7" y2="15.2"/><line x1="7.2" y1="17" x2="16.8" y2="17"/></svg>
+        Marketing
+      </a>
+
+      <a href="#detras-del-sistema" class="sidebar-link">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="3.2"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></svg>
+        Detrás del Sistema
+      </a>
+
+      <a href="#contacto" class="sidebar-link sidebar-cta">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3Z"/><path d="M10 13l6.5-6.5"/></svg>
+        Contactar
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-socials">
+        <a class="sidebar-social" href="https://www.instagram.com/helicedronemkt/" target="_blank" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="sidebar-social" href="https://www.tiktok.com/@helicedronemkt" target="_blank" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5v11.2a3.3 3.3 0 1 1-3.3-3.3c.3 0 .6.03.9.1"/><path d="M14 3.5c.4 2.2 2 3.9 4.2 4.2"/></svg>
+        </a>
+        <a class="sidebar-social" href="https://www.youtube.com/@helicedronemkt" target="_blank" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="3.5"/><path d="M10.3 9.7v4.6l4.1-2.3-4.1-2.3Z" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+      <a class="sidebar-whatsapp" href="https://wa.me/5493534273691" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.892c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652a12.062 12.062 0 005.71 1.447h.006c6.585 0 11.946-5.335 11.949-11.896a11.821 11.821 0 00-3.487-8.45"/></svg>
+        WhatsApp directo
+      </a>
+    </div>
+  </aside>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-video-wrap" style="background-image: url('assets/fondo.jpg')">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-tag">Servicio Aéreo Profesional </p>
+      <h1 class="hero-title">ELEVAMOS<br>TU VISIÓN</h1>
+      <p class="hero-sub"> Hélice Drone desarrolla piezas audiovisuales aéreas diseñadas para impactar.</p>
+      <div class="hero-cta">
+        <a href="#servicios" class="btn-primary">Ver Servicios</a>
+        <a href="#marketing" class="btn-ghost" onclick="event.preventDefault(); openMarketingPage();">Servicio de Marketing</a>
+        <a href="#contacto" class="btn-ghost">Contactar</a>
+      </div>
+    </div>
+    <a href="#servicios" class="hero-scroll">↓ Avanza</a>
+  </section>
+
+  <!-- SERVICIO DE MARKETING: página flotante, se abre desde el CTA
+       "Servicio de Marketing" (hero y barra lateral) via openMarketingPage() -->
+  <div class="marketing-overlay" id="marketing-overlay" onclick="if (event.target === this) closeMarketingPage();">
+    <div class="marketing-page" role="dialog" aria-modal="true" aria-labelledby="marketing-title">
+      <button class="marketing-close" onclick="closeMarketingPage()" aria-label="Cerrar">✕</button>
+
+      <div class="marketing-hero">
+        <img class="marketing-hero-img" src="assets/stock/marketing-hero.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+        <div class="marketing-hero-overlay"></div>
+        <div class="marketing-hero-content">
+          <h2 id="marketing-title">Servicios de Marketing</h2>
+          <p>Servicios de marketing digital independientes del servicio aéreo: gestión de redes, campañas de pauta, estrategia de contenido y desarrollo web, para hacer crecer tu marca de punta a punta.</p>
+        </div>
+      </div>
+
+      <div class="marketing-body">
+        <div class="marketing-grid">
+          <div class="marketing-item">
+            <img src="assets/stock/marketing-redes.jpg" alt="" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+            <h3>Gestión de Redes Sociales</h3>
+            <p>Manejo integral de tus redes: planificación, diseño de piezas y publicación constante para hacer crecer tu comunidad.</p>
+          </div>
+          <div class="marketing-item">
+            <img src="assets/stock/marketing-campanias.jpg" alt="" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+            <h3>Campañas Publicitarias</h3>
+            <p>Diseño y gestión de campañas de pauta digital en Meta Ads y Google Ads, optimizadas para conversión.</p>
+          </div>
+          <div class="marketing-item">
+            <img src="assets/stock/marketing-contenido.jpg" alt="" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+            <h3>Estrategia de Contenido</h3>
+            <p>Perfiles optimizados, branding de la marca y planificación mensual de contenido, para que cada publicación tenga un objetivo claro.</p>
+          </div>
+          <div class="marketing-item">
+            <img src="assets/stock/marketing-web.jpg" alt="" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+            <h3>Creación de Páginas Web</h3>
+            <p>Diseño y desarrollo de sitios web funcionales, responsivos y optimizados para convertir visitas en clientes.</p>
+          </div>
+        </div>
+        <a href="#contacto" class="btn-primary" onclick="closeMarketingPage()" style="display:inline-block;">
+          Solicitar cotización →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICIOS -->
+  <section class="servicios" id="servicios">
+    <div class="section-header">
+      <p class="section-tag">Mis servicios</p>
+      <h2 class="section-title">LO QUE PODEMOS LOGRAR</h2>
+    </div>
+    <p class="carousel-hint">← Deslizá con el dedo o el mouse para ver más →</p>
+    <div class="carousel">
+      <div class="carousel-track">
+
+      <div class="card" data-service="tomas" id="servicio-tomas">
+        <div class="card-img" style="background-image: url('assets/stock/servicio-tomas.jpg')"></div>
+        <div class="card-body">
+          <h3>Tomas Aéreas</h3>
+          <p>Videos cinematográficos desde el aire en resolución HD. Ideales para todo tipo de proyectos visuales, como Instagram y TikTok.</p>
+          <div class="card-actions">
+            <button class="btn-more" onclick="goToProjects('tomas')">Ver proyectos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-service="inmobiliaria" id="servicio-inmobiliaria">
+        <div class="card-img" style="background-image: url('assets/stock/servicio-inmobiliaria.jpg')"></div>
+        <div class="card-body">
+          <h3>Inmobiliarias</h3>
+          <p>Mostrá propiedades desde una perspectiva única. Aumentá las ventas con recorridos aéreos impactantes que muestran también sus alrededores.</p>
+          <div class="card-actions">
+            <button class="btn-more" onclick="goToProjects('inmobiliaria')">Ver proyectos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-service="eventos" id="servicio-eventos">
+        <div class="card-img" style="background-image: url('assets/stock/servicio-eventos.jpg')"></div>
+        <div class="card-body">
+          <h3>Eventos Privados</h3>
+          <p>Bodas, cumpleaños, fiestas corporativas. Inmortalizá cada momento desde arriba.</p>
+          <div class="card-actions">
+            <button class="btn-more" onclick="goToProjects('eventos')">Ver proyectos</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-service="viajes" id="servicio-viajes">
+        <div class="card-img" style="background-image: url('assets/stock/servicio-viajes.jpg')"></div>
+        <div class="card-body">
+          <h3>Viajes & Turismo</h3>
+          <p>Cabañas, hoteles, complejos turísticos y parques nacionales captados desde el cielo. Contenido para alojamientos, agencias e influencers de viaje.</p>
+          <div class="card-actions">
+            <button class="btn-more" onclick="goToProjects('viajes')">Ver proyectos</button>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section class="proyectos" id="proyectos">
+    <div class="section-header">
+      <p class="section-tag">Nuestro trabajo</p>
+      <h2 class="section-title">PROYECTOS</h2>
+    </div>
+
+    <div class="proyectos-tabs" role="tablist" aria-label="Proyectos por servicio">
+      <button class="tab-btn active" id="tab-tomas" role="tab" aria-selected="true" aria-controls="panel-tomas" data-tab="tomas" tabindex="0">Tomas Aéreas</button>
+      <button class="tab-btn" id="tab-inmobiliaria" role="tab" aria-selected="false" aria-controls="panel-inmobiliaria" data-tab="inmobiliaria" tabindex="-1">Inmobiliarias</button>
+      <button class="tab-btn" id="tab-eventos" role="tab" aria-selected="false" aria-controls="panel-eventos" data-tab="eventos" tabindex="-1">Eventos Privados</button>
+      <button class="tab-btn" id="tab-viajes" role="tab" aria-selected="false" aria-controls="panel-viajes" data-tab="viajes" tabindex="-1">Viajes &amp; Turismo</button>
+      <button class="tab-btn" id="tab-villamaria" role="tab" aria-selected="false" aria-controls="panel-villamaria" data-tab="villamaria" tabindex="-1">Villa María</button>
+    </div>
+
+    <p class="carousel-hint" id="proyectos-hint">← Deslizá, arrastrá o usá las flechas del teclado para ver más →</p>
+
+    <!-- Los proyectos de cada panel se renderizan dinámicamente desde
+         `projectsData` en script.js (ver sección "PROYECTOS: DATA + RENDER").
+         Los contenedores .carousel-track quedan vacíos acá a propósito. -->
+    <div class="proyectos-panels">
+
+      <div class="carousel" data-panel="tomas" id="panel-tomas" role="tabpanel" aria-labelledby="tab-tomas" aria-label="Proyectos de Tomas Aéreas">
+        <div class="carousel-track"></div>
+      </div>
+
+      <div class="carousel" data-panel="inmobiliaria" id="panel-inmobiliaria" role="tabpanel" aria-labelledby="tab-inmobiliaria" aria-label="Proyectos de Inmobiliarias" hidden>
+        <div class="carousel-track"></div>
+      </div>
+
+      <div class="carousel" data-panel="eventos" id="panel-eventos" role="tabpanel" aria-labelledby="tab-eventos" aria-label="Proyectos de Eventos Privados" hidden>
+        <div class="carousel-track"></div>
+      </div>
+
+      <div class="carousel" data-panel="viajes" id="panel-viajes" role="tabpanel" aria-labelledby="tab-viajes" aria-label="Proyectos de Viajes y Turismo" hidden>
+        <div class="carousel-track"></div>
+      </div>
+
+      <div class="carousel" data-panel="villamaria" id="panel-villamaria" role="tabpanel" aria-labelledby="tab-villamaria" aria-label="Proyectos en Villa María" hidden>
+        <div class="carousel-track"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DETRÁS DEL SISTEMA: sección personal/portfolio, en el lugar donde
+       antes estaba Vistas Aéreas Conocidas. Son tarjetas de texto cortas
+       en carrusel (mismo patrón que .card / .vista-slide), a propósito
+       para no caer en un bloque largo de párrafos. -->
+  <section class="detras" id="detras-del-sistema">
+    <div class="section-header">
+      <p class="section-tag">Quién maneja los controles</p>
+      <h2 class="section-title">DETRÁS DEL SISTEMA</h2>
+    </div>
+    <p class="carousel-hint">← Deslizá con el dedo o el mouse para ver más →</p>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="about-card">
+          <div class="about-card-img" style="background-image: url('assets/about/quien-soy.jpg')"></div>
+          <div class="about-card-body">
+            <h3>Presentación</h3>
+            <p>Mi nombre es Luciano Petitti y opero desde Villa María hacia todo el país. Soy estudiante de Marketing Digital en el Instituto Leibnitz.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-img" style="background-image: url('assets/about/como-trabajo.jpg')"></div>
+          <div class="about-card-body">
+            <h3>Cómo trabajo</h3>
+            <p>No se trata solo de hacer tomas lindas desde arriba, sino de entender qué necesita comunicar tu marca. Definimos juntos el objetivo del video, el estilo visual y el tipo de público al que queremos llegar.</p>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="about-card-img" style="background-image: url('assets/about/herramientas.jpg')"></div>
+          <div class="about-card-body">
+            <h3>Herramientas</h3>
+            <p>Vuelo con un DJI Mini 5 Pro y edito en CapCut y Edits (corrección de color y montaje). Entrego todo el material en HD a través de una carpeta de Google Drive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contacto" id="contacto">
+    <div class="section-header light">
+      <p class="section-tag">¿Listo para volar?</p>
+      <h2 class="section-title">CONTACTATE</h2>
+    </div>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <p>Contanos sobre tu proyecto y te respondemos en menos de 24 horas.</p>
+        <a class="contact-item" href="https://wa.me/5493534273691" target="_blank">WhatsApp · +54 9 353 427-3691</a>
+        <a class="contact-item" href="mailto:luchipetifer@gmail.com">Email · luchipetifer@gmail.com</a>
+      </div>
+      <form class="contact-form" id="contact-form" onsubmit="handleForm(event)">
+        <input type="text" name="nombre" placeholder="Tu nombre" required />
+        <input type="email" name="email" placeholder="Tu email" required />
+
+        <select name="servicio">
+          <option value="">¿Qué servicio te interesa?</option>
+          <option value="Tomas Aereas">Tomas Aéreas</option>
+          <option value="Inmobiliarias">Inmobiliarias</option>
+          <option value="Eventos Privados">Eventos Privados</option>
+          <option value="Viajes y Turismo">Viajes & Turismo</option>
+          <option value="Otro">Otro</option>
+        </select>
+
+        <textarea name="mensaje" placeholder="Contanos tu proyecto..." rows="4" required></textarea>
+
+        <button type="submit" class="btn-primary">Enviar por WhatsApp</button>
+        <p id="form-status" class="form-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- VISTAS AÉREAS CONOCIDAS -->
+  <section class="vistas" id="vistas">
+    <div class="section-header">
+      <p class="section-tag">Inspiración desde el cielo</p>
+      <h2 class="section-title">VISTAS AÉREAS CONOCIDAS</h2>
+    </div>
+    <p class="carousel-hint">← Deslizá con el dedo o el mouse para ver más →</p>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="vista-slide" data-label="Torre Eiffel · París">
+          <img src="assets/stock/vista-eiffel.jpg" alt="Vista aérea de la Torre Eiffel, París" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Torre Eiffel · París</span>
+        </div>
+        <div class="vista-slide" data-label="Santorini · Grecia">
+          <img src="assets/stock/vista-santorini.jpg" alt="Vista aérea de Santorini, Grecia" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Santorini · Grecia</span>
+        </div>
+        <div class="vista-slide" data-label="Machu Picchu · Perú">
+          <img src="assets/stock/vista-machupicchu.jpg" alt="Vista aérea de Machu Picchu, Perú" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Machu Picchu · Perú</span>
+        </div>
+        <div class="vista-slide" data-label="Miami Beach · Florida">
+          <img src="assets/stock/vista-miami.jpg" alt="Vista aérea de Miami Beach, Florida" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Miami Beach · Florida</span>
+        </div>
+        <div class="vista-slide" data-label="Cataratas del Iguazú">
+          <img src="assets/stock/vista-iguazu.jpg" alt="Vista aérea de las Cataratas del Iguazú" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Cataratas del Iguazú</span>
+        </div>
+        <div class="vista-slide" data-label="Cristo Redentor · Río de Janeiro">
+          <img src="assets/stock/vista-rio.jpg" alt="Vista aérea de Río de Janeiro y el Cristo Redentor, Brasil" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Cristo Redentor · Río de Janeiro</span>
+        </div>
+        <div class="vista-slide" data-label="Glaciar Perito Moreno · Argentina">
+          <img src="assets/stock/vista-peritomoreno.jpg" alt="Vista aérea del Glaciar Perito Moreno, Argentina" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Glaciar Perito Moreno · Argentina</span>
+        </div>
+        <div class="vista-slide" data-label="Salar de Uyuni · Bolivia">
+          <img src="assets/stock/vista-uyuni.jpg" alt="Vista aérea del Salar de Uyuni, Bolivia" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Salar de Uyuni · Bolivia</span>
+        </div>
+        <div class="vista-slide" data-label="Gran Cañón · EE.UU.">
+          <img src="assets/stock/vista-grancanon.jpg" alt="Vista aérea del Gran Cañón, Estados Unidos" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Gran Cañón · EE.UU.</span>
+        </div>
+        <div class="vista-slide" data-label="Puente Golden Gate · San Francisco">
+          <img src="assets/stock/vista-goldengate.jpg" alt="Vista aérea del puente Golden Gate, San Francisco" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Golden Gate · San Francisco</span>
+        </div>
+        <div class="vista-slide" data-label="Monument Valley · EE.UU.">
+          <img src="assets/stock/vista-monumentvalley.jpg" alt="Vista aérea de Monument Valley, Estados Unidos" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Monument Valley · EE.UU.</span>
+        </div>
+        <div class="vista-slide" data-label="Cataratas del Niágara">
+          <img src="assets/stock/vista-niagara.jpg" alt="Vista aérea de las Cataratas del Niágara" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Cataratas del Niágara</span>
+        </div>
+        <div class="vista-slide" data-label="Muralla China">
+          <img src="assets/stock/vista-murallachina.jpg" alt="Vista aérea de la Muralla China" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('empty')">
+          <span class="vista-label">Muralla China</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <img class="logo-drone-sm" src="assets/logo-icon.png" alt="" width="320" height="152" />
+      HELICE<span>DRONE</span>
+    </div>
+    <div class="social-links footer-social">
+      <a href="https://www.instagram.com/helicedronemkt/" target="_blank">Instagram</a>
+      <a href="https://www.tiktok.com/@helicedronemkt" target="_blank">TikTok</a>
+      <a href="https://www.youtube.com/@helicedronemkt" target="_blank">YouTube</a>
+    </div>
+    <p>© 2026 Helice Drone Mkt · Villa María, Córdoba · Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

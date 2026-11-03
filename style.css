@@ -1,0 +1,1917 @@
+/* ===== VARIABLES ===== */
+:root {
+  --black: #070709;
+  --dark: #0e0e12;
+  --card-bg: #13131a;
+  --accent: #39ff8f;
+  --accent2: #00e5ff;
+  --accent-text: #39ff8f;  /* accent usado como texto: en claro se oscurece para que se lea bien */
+  --ink: #070709;          /* SIEMPRE oscuro: texto sobre fondos brillantes (botones en --accent) */
+  --white: #f4f4f0;
+  --muted: #8888a0;
+  --border-rgb: 255, 255, 255;  /* base de los bordes sutiles: rgba(var(--border-rgb), alpha) */
+  --text-rgb: 244, 244, 240;    /* base del texto secundario semi-transparente */
+  --nav-bg: rgba(7, 7, 9, 0.7);
+  --nav-bg-scrolled: rgba(7, 7, 9, 0.97);
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  --radius: 12px;
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+#servicios, #proyectos, #vistas, #contacto, #detras-del-sistema,
+#servicio-tomas, #servicio-inmobiliaria, #servicio-eventos, #servicio-viajes { scroll-margin-top: 90px; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+  transition: transform var(--transition), box-shadow var(--transition);
+  animation: pulse-wa 2.5s infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37, 211, 102, 0.65);
+}
+.whatsapp-float svg { width: 58px; height: 58px; }
+@keyframes pulse-wa {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50%       { box-shadow: 0 4px 32px rgba(37,211,102,0.7); }
+}
+
+/* ===== NAVBAR =====
+   .scrolled la aplica script.js en vez de un color inline, así solo hay
+   que tocar la variable --nav-bg-scrolled acá si algún día cambia. */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(var(--border-rgb), 0.05);
+  transition: background var(--transition);
+}
+.navbar.scrolled { background: var(--nav-bg-scrolled); }
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-brand-name {
+  color: var(--white);
+  animation: brand-glow 3s ease-in-out infinite;
+}
+.nav-brand-name > span { color: var(--accent-text); }
+/* "mkt" del handle (@helicedronemkt): sufijo chico y en minúscula, no
+   verde como "DRONE" para que se lea como una marquita aparte del nombre. */
+.nav-brand-name > .nav-brand-suffix {
+  color: var(--white);
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-left: 0.1em;
+}
+@keyframes brand-glow {
+  0%, 100% { text-shadow: 0 0 0 rgba(57,255,143,0); }
+  50% { text-shadow: 0 0 12px rgba(57,255,143,0.55); }
+}
+/* Ancho fijo NO: el logo real (assets/logo-icon.png) es más ancho que alto,
+   se deja que el ancho lo ponga el aspect-ratio propio de la imagen y solo
+   se fija la altura, así no queda estirado/deformado. */
+.logo-drone {
+  height: 32px;
+  width: auto;
+}
+.logo-drone-sm {
+  height: 24px;
+  width: auto;
+}
+.navbar-actions { display: flex; align-items: center; gap: 0.6rem; }
+.nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(var(--border-rgb), 0.15);
+  color: var(--white);
+  line-height: 1;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.nav-toggle:hover { border-color: var(--accent-text); color: var(--accent-text); }
+.nav-toggle-icon { width: 20px; height: 20px; }
+/* Acceso directo al blog de turismo: misma pastilla que el menú, con
+   el texto "Blog" al lado del ícono (en celular queda solo el ícono). */
+.nav-blog {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 42px;
+  padding: 0 1rem 0 0.8rem;
+  border: 1px solid rgba(var(--border-rgb), 0.15);
+  border-radius: 50px;
+  color: var(--white);
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.nav-blog:hover, .nav-blog:focus-visible { border-color: var(--accent-text); color: var(--accent-text); }
+@media (max-width: 600px) {
+  .nav-blog { width: 42px; padding: 0; justify-content: center; }
+  .nav-blog-label { display: none; }
+}
+/* Hamburguesa que se convierte en X: las 3 líneas rotan/se corren al
+   centro (mismo spacing que las separa, 5px) cuando el menú está abierto;
+   script.js ya pone aria-expanded="true" en #nav-toggle al abrir/cerrar. */
+.nav-toggle-line {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+  transform-origin: center;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-line-top { transform: translateY(5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-line-mid { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-line-bot { transform: translateY(-5px) rotate(-45deg); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle-line { transition: none; }
+}
+
+/* ===== SIDEBAR (panel deslizable, estética "HUD" acorde a la marca) ===== */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+.sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 84vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* El scroll del panel no "contagia" a la página de atrás y frena el
+     rebote elástico al llegar a los extremos. */
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  /* Scrollbar fino a tono con el verde de marca (mismo espíritu que los
+     carruseles y el chat). Firefox: */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57,255,143,0.32) transparent;
+  /* Columna flex: el nav ocupa el espacio disponible (flex: 1 1 auto, ver
+     más abajo) y el sidebar-footer queda pegado abajo del todo cuando el
+     contenido no llena el panel; si no entra, el panel entero scrollea. */
+  display: flex;
+  flex-direction: column;
+  z-index: 1100;
+  transform: translateX(-100%);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), background var(--transition);
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  /* Fondo vidriado liso, sin grilla ni animación. */
+  background-color: rgba(14, 14, 18, 0.94);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(57,255,143,0.18);
+}
+.sidebar.open { transform: translateX(0); }
+/* Chromium/Safari: riel transparente con margen arriba/abajo (para no
+   pisar las esquinas tipo visor), pulgar redondeado que se aviva al
+   pasar el mouse. */
+.sidebar::-webkit-scrollbar { width: 7px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; margin: 34px 0; }
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(57,255,143,0.28);
+  border-radius: 999px;
+  transition: background var(--transition);
+}
+.sidebar::-webkit-scrollbar-thumb:hover { background: rgba(57,255,143,0.55); }
+/* Esquinas tipo mira/visor de cámara, en las dos esquinas del borde visible */
+.sidebar::before,
+.sidebar::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.sidebar::before { top: 12px; border-width: 2px 2px 0 0; }
+.sidebar::after { bottom: 12px; border-width: 0 2px 2px 0; }
+/* Barrido tipo radar bajando por el panel mientras está abierto */
+.sidebar-scan {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(57,255,143,0.7), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0);
+  animation: sidebar-scan-move 3.2s linear infinite;
+  animation-play-state: paused;
+}
+.sidebar.open .sidebar-scan { opacity: 0.7; animation-play-state: running; }
+@keyframes sidebar-scan-move {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.3rem 1.3rem 1.5rem 1.7rem;
+}
+.sidebar-brand { display: flex; align-items: center; gap: 0.6rem; }
+.sidebar-brand-logo { height: 28px; width: auto; }
+.sidebar-brand-text { display: flex; flex-direction: column; gap: 0.2rem; }
+.sidebar-brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  color: var(--white);
+}
+.sidebar-brand-name > span { color: var(--accent-text); }
+.sidebar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.sidebar-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 3px rgba(57,255,143,0.6); }
+  50%       { box-shadow: 0 0 9px rgba(57,255,143,1); }
+}
+.sidebar-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: none;
+  border: 1px solid rgba(57,255,143,0.2);
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.sidebar-close:hover { border-color: var(--accent-text); color: var(--accent-text); }
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 1.4rem;
+  padding: 1.5rem 1.7rem 2.5rem;
+}
+/* Cascada de entrada: cada item aparece con una leve demora al abrir el
+   panel (mismo espíritu que el hero, ver html.js-intro.intro-done más
+   abajo). Al cerrar, la transition corre en reversa sin más código. */
+.sidebar-nav > * {
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.sidebar.open .sidebar-nav > * { opacity: 1; transform: translateX(0); }
+.sidebar-nav > *:nth-child(1) { transition-delay: 0.08s; }
+.sidebar-nav > *:nth-child(2) { transition-delay: 0.13s; }
+.sidebar-nav > *:nth-child(3) { transition-delay: 0.18s; }
+.sidebar-nav > *:nth-child(4) { transition-delay: 0.23s; }
+.sidebar-nav > *:nth-child(5) { transition-delay: 0.28s; }
+.sidebar-nav > *:nth-child(6) { transition-delay: 0.33s; }
+.sidebar-nav > *:nth-child(7) { transition-delay: 0.38s; }
+
+.sidebar-group { display: flex; flex-direction: column; }
+.sidebar-group-head { display: flex; align-items: center; gap: 0.4rem; }
+.sidebar-group-head .sidebar-link { flex: 1 1 auto; min-width: 0; }
+
+.sidebar-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--white);
+  transition: color var(--transition), text-shadow var(--transition);
+}
+.sidebar-link:not(.sidebar-cta):hover {
+  color: var(--accent-text);
+  text-shadow: 0 0 10px rgba(57,255,143,0.5);
+}
+.sidebar-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--accent-text);
+  transition: transform var(--transition), filter var(--transition);
+}
+.sidebar-link:not(.sidebar-cta):hover .sidebar-icon {
+  transform: scale(1.14);
+  filter: drop-shadow(0 0 6px rgba(57,255,143,0.65));
+}
+/* Sección activa (ver script.js: IntersectionObserver sobre las secciones
+   de la página) — barrita a la izquierda tipo indicador de posición HUD. */
+.sidebar-link.active:not(.sidebar-cta) {
+  color: var(--accent-text);
+  text-shadow: 0 0 10px rgba(57,255,143,0.5);
+}
+.sidebar-link.active:not(.sidebar-cta)::before {
+  content: '';
+  position: absolute;
+  left: -1.05rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 65%;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(57,255,143,0.7);
+}
+.sidebar-sublinks a.active { color: var(--accent-text); }
+.sidebar-sublinks a.active::before { opacity: 1; }
+
+.sidebar-expand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(57,255,143,0.18);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.sidebar-expand:hover { border-color: var(--accent-text); color: var(--accent-text); }
+.sidebar-expand[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  box-shadow: 0 0 8px rgba(57,255,143,0.35);
+}
+.sidebar-expand .chevron {
+  width: 11px;
+  height: 11px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sidebar-expand[aria-expanded="true"] .chevron { transform: rotate(90deg); }
+
+/* Truco de grid 0fr -> 1fr: anima el alto del contenido sin medirlo por
+   JS (evita layout thrashing). El hijo lleva el overflow:hidden real. */
+.sidebar-sublinks-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.sidebar-sublinks-wrap.expanded { grid-template-rows: 1fr; }
+.sidebar-sublinks {
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.7rem 0 0 1.6rem;
+  margin-left: 0.55rem;
+}
+.sidebar-sublinks a {
+  position: relative;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color var(--transition), transform var(--transition);
+}
+.sidebar-sublinks a::before {
+  content: '›';
+  position: absolute;
+  left: -1rem;
+  color: var(--accent-text);
+  opacity: 0.7;
+}
+.sidebar-sublinks a:hover { color: var(--accent-text); transform: translateX(3px); }
+
+.sidebar-cta {
+  /* El fondo (color sólido + rayas animadas) lo define la regla compartida
+     con .btn-primary, más abajo en ===== BUTTONS ===== */
+  margin-top: 0.3rem;
+  color: var(--ink) !important;
+  padding: 0.7rem 1.2rem;
+  border-radius: 50px;
+  justify-content: center;
+  transition: background-color var(--transition);
+}
+.sidebar-cta:hover { background-color: var(--accent2); color: var(--ink) !important; }
+.sidebar-cta .sidebar-icon { color: var(--ink); }
+
+/* Pie de la sidebar: accesos rápidos a redes + WhatsApp directo. Queda
+   pegado abajo del todo gracias al flex del .sidebar (.sidebar-nav crece
+   con flex: 1 1 auto, ver más arriba), y entra con la misma cascada que
+   el resto del panel (delay un poco mayor al último link del nav). */
+.sidebar-footer {
+  flex-shrink: 0;
+  margin-top: auto;
+  padding: 1.4rem 1.7rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: 0.42s;
+}
+.sidebar.open .sidebar-footer { opacity: 1; transform: translateX(0); }
+
+.sidebar-footer-socials { display: flex; gap: 0.7rem; }
+.sidebar-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(57,255,143,0.18);
+  color: var(--muted);
+  transition: var(--transition);
+}
+.sidebar-social svg { width: 16px; height: 16px; }
+.sidebar-social:hover {
+  border-color: var(--accent-text);
+  color: var(--accent-text);
+  box-shadow: 0 0 8px rgba(57,255,143,0.35);
+  transform: translateY(-2px);
+}
+
+.sidebar-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 50px;
+  border: 1px solid rgba(37,211,102,0.4);
+  color: #25D366;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.sidebar-whatsapp svg { width: 16px; height: 16px; flex-shrink: 0; }
+.sidebar-whatsapp:hover {
+  background-color: rgba(37,211,102,0.12);
+  border-color: #25D366;
+  box-shadow: 0 0 12px rgba(37,211,102,0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar, .sidebar-nav > *, .sidebar-sublinks-wrap, .sidebar-expand .chevron, .sidebar-footer {
+    transition: none !important;
+  }
+  .sidebar-nav > * { opacity: 1; transform: none; }
+  .sidebar-footer { opacity: 1; transform: none; }
+  .sidebar-scan { display: none; }
+  .sidebar-status-dot { animation: none; }
+  .sidebar { animation: none; }
+}
+
+/* ===== INTRO / SPLASH DE ENTRADA =====
+   Oculto por defecto: solo se activa si <html> tiene la clase "js-intro"
+   (la agrega el script del <head>, antes del primer paint, salvo que el
+   visitante ya la haya visto en esta pestaña o prefiera menos movimiento).
+   Sin esa clase, el sitio se ve normal desde el primer frame. */
+#intro-splash {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.3rem;
+  background: var(--black);
+  transition: opacity 0.6s ease;
+}
+html.js-intro #intro-splash { display: flex; }
+#intro-splash.intro-hide { opacity: 0; pointer-events: none; }
+
+/* El logo real (assets/logo.png) ya trae el ícono + "HÉLICE DRONE"
+   dibujados adentro, así que entra como una sola pieza: aparece con un
+   pequeño rebote (en vez de armarse parte por parte, que era el truco para
+   cuando el logo era un SVG hecho a mano). */
+.intro-logo {
+  width: min(260px, 60vw);
+  height: auto;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: intro-logo-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.1s;
+}
+@keyframes intro-logo-in { to { opacity: 1; transform: scale(1); } }
+@keyframes intro-fade { to { opacity: 1; } }
+
+/* Una barrita con un barrido en loop, como "cargando/despegando" */
+.intro-bar {
+  width: 130px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(var(--border-rgb), 0.15);
+  overflow: hidden;
+  opacity: 0;
+  animation: intro-fade 0.3s ease forwards;
+  animation-delay: 1s;
+}
+.intro-bar span {
+  display: block;
+  height: 100%;
+  width: 35%;
+  background: var(--accent);
+  animation: intro-sweep 1s ease-in-out infinite;
+  animation-delay: 1.25s;
+}
+@keyframes intro-sweep {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(380%); }
+}
+
+/* ===== HERO =====
+   Tiene un video/foto de fondo con un velo oscuro encima; su texto queda
+   fijo en tonos claros a propósito, no depende de las variables del resto
+   del sitio (siempre hay suficiente contraste contra ese velo). */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #070709;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(7,7,9,0.88) 40%, rgba(7,7,9,0.5) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 750px;
+  padding: 2rem;
+  animation: fadeUp 1s ease both;
+}
+.hero-tag {
+  font-size: 0.78rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  color: #f4f4f0;
+  margin-bottom: 1.2rem;
+  text-wrap: balance;
+}
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(244,244,240,0.7);
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: #8888a0;
+  text-decoration: none;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+}
+
+
+/* Con splash de entrada: el contenido del hero no usa el fadeUp de bloque
+   (lo cancela acá), sino que cada elemento entra por separado y escalonado
+   una vez que termina la animación de armado del logo (clase "intro-done",
+   agregada por script.js cuando el splash se cierra). */
+html.js-intro .hero-content { animation: none; }
+html.js-intro .hero-content > * { opacity: 0; transform: translateY(24px); }
+html.js-intro.intro-done .hero-content > * { animation: fadeUp 0.7s ease forwards; }
+html.js-intro.intro-done .hero-tag   { animation-delay: 0s; }
+html.js-intro.intro-done .hero-title { animation-delay: 0.15s; }
+html.js-intro.intro-done .hero-sub   { animation-delay: 0.35s; }
+html.js-intro.intro-done .hero-cta   { animation-delay: 0.5s; }
+html.js-intro .hero-scroll { opacity: 0; animation: none; }
+html.js-intro.intro-done .hero-scroll {
+  animation: fadeUp 0.6s ease forwards, bounce 2s ease-in-out infinite;
+  animation-delay: 0.9s, 1.5s;
+}
+
+/* ===== BUTTONS ===== */
+/* El mini dron volando (::before, silueta SVG en data URI) queda exclusivo
+   de .btn-primary: antes también volaba en .sidebar-cta y .btn-ghost, y en
+   el hero (3 botones juntos) se veían 3 drones a la vez. Con uno solo en el
+   botón principal alcanza para dar el movimiento sin saturar. */
+.btn-primary,
+.sidebar-cta,
+.btn-ghost {
+  position: relative;
+  /* isolation (no overflow:hidden — recortaría el box-shadow verde del
+     hover): contiene el z-index negativo del dron para que no se "escape"
+     detrás de otras secciones de la página. */
+  isolation: isolate;
+}
+.btn-primary,
+.sidebar-cta {
+  background-color: var(--accent);
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  z-index: -1; /* detrás del texto, delante del fondo/rayas */
+  top: 50%;
+  left: -12%; /* la animación controla la posición real; esto es solo el punto de partida antes del primer frame */
+  width: 26px;
+  height: 17px;
+  margin-top: -9px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCAzMiI+PGcgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyLjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC45MiI+PGxpbmUgeDE9IjE0IiB5MT0iMTYiIHgyPSI0IiB5Mj0iOCIvPjxsaW5lIHgxPSIzNCIgeTE9IjE2IiB4Mj0iNDQiIHkyPSI4Ii8+PGxpbmUgeDE9IjE0IiB5MT0iMTYiIHgyPSI0IiB5Mj0iMjQiLz48bGluZSB4MT0iMzQiIHkxPSIxNiIgeDI9IjQ0IiB5Mj0iMjQiLz48L2c+PGNpcmNsZSBjeD0iNCIgY3k9IjgiIHI9IjQuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOTIiLz48Y2lyY2xlIGN4PSI0NCIgY3k9IjgiIHI9IjQuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOTIiLz48Y2lyY2xlIGN4PSI0IiBjeT0iMjQiIHI9IjQuMiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOTIiLz48Y2lyY2xlIGN4PSI0NCIgY3k9IjI0IiByPSI0LjIiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjkyIi8+PHJlY3QgeD0iMTMiIHk9IjExIiB3aWR0aD0iMjIiIGhlaWdodD0iMTAiIHJ4PSI1IiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC45MiIvPjwvc3ZnPg==");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  animation: btn-drone-fly 4.5s ease-in-out infinite;
+}
+@keyframes btn-drone-fly {
+  0%   { left: -12%; top: 62%; opacity: 0; transform: rotate(-6deg); }
+  15%  { opacity: 1; }
+  50%  { top: 30%; transform: rotate(5deg); }
+  85%  { opacity: 1; }
+  100% { left: 108%; top: 55%; opacity: 0; transform: rotate(-3deg); }
+}
+.btn-primary {
+  color: var(--ink);
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: inline-block;
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(57,255,143,0.35);
+}
+/* btn-ghost solo se usa en el hero, así que también queda fijo en tonos
+   claros. Sin fondo propio (a diferencia de .btn-primary), pero comparte
+   el mini dron animado de la regla de arriba. */
+.btn-ghost {
+  background: transparent;
+  color: #f4f4f0;
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.25);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), transform var(--transition);
+  display: inline-block;
+}
+/* Mismo levantamiento al hover que .btn-primary y las cards de Servicios,
+   así los 3 CTA del hero se sienten con el mismo "peso". */
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* ===== STATS ===== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--dark);
+  border-top: 1px solid rgba(var(--border-rgb), 0.06);
+  border-bottom: 1px solid rgba(var(--border-rgb), 0.06);
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem;
+  border-right: 1px solid rgba(var(--border-rgb), 0.06);
+  gap: 0.3rem;
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3rem;
+  color: var(--accent-text);
+  letter-spacing: 0;
+}
+.stat-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.section-tag {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--accent-text);
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: 0.5px;
+  color: var(--white);
+  text-wrap: balance;
+}
+
+/* ===== SERVICIOS ===== */
+.servicios {
+  /* Menos padding abajo: Proyectos viene justo después con el mismo fondo,
+     así que no hace falta tanto aire de este lado. */
+  padding: 4rem 4rem 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: min(300px, 80vw);
+  scroll-snap-align: start;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(var(--border-rgb), 0.06);
+  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+  will-change: transform;
+}
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(57,255,143,0.2);
+}
+.card-img {
+  height: 200px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+.card:hover .card-img { transform: scale(1.06); }
+/* card-body en columna con la descripción "elástica": así los botones
+   quedan siempre pegados abajo, a la misma altura en las 4 cards. */
+.card-body {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+  align-items: center;
+}
+.card-body h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.2px;
+  margin-bottom: 0.8rem;
+}
+.card-body p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+.card-actions { display: flex; flex-wrap: nowrap; gap: 0.6rem; align-self: stretch; }
+.btn-more {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  white-space: nowrap;
+  background: none;
+  border: 1px solid rgba(57,255,143,0.4);
+  color: var(--accent-text);
+  padding: 0.55rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.btn-more:hover { background: var(--accent); color: var(--ink); }
+.btn-ver-proyectos {
+  border-color: rgba(var(--border-rgb), 0.2);
+  color: var(--white);
+}
+.btn-ver-proyectos:hover { background: var(--white); color: var(--black); }
+
+/* ===== PROYECTOS ===== */
+.proyectos {
+  /* Va "encajada" entre Servicios y Vistas, las tres con el mismo fondo:
+     padding chico arriba y abajo para no acumular espacio vacío de más. */
+  padding: 2.5rem 4rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.proyectos-tabs {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.tab-btn {
+  background: transparent;
+  border: 1px solid rgba(var(--border-rgb), 0.15);
+  color: var(--muted);
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.tab-btn:hover { color: var(--white); border-color: rgba(var(--border-rgb), 0.3); }
+.tab-btn.active {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+.carousel-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+.carousel { position: relative; }
+.carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.3rem 0.2rem 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+}
+.carousel-track.dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+/* Un swipe/arrastre avanza de a una tarjeta: no se pasa de largo. */
+.carousel-track > * { scroll-snap-stop: always; }
+/* Servicios y "Detrás": todas las cards a la misma altura y alineadas
+   arriba (con center quedaban escalonadas según el largo del texto) */
+.servicios .carousel-track,
+.detras .carousel-track,
+.proyectos .carousel-track { align-items: stretch; }
+.carousel-track.dragging .project-slide img,
+.carousel-track.dragging .project-slide video { pointer-events: none; }
+.project-slide {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(340px, 80vw);
+  /* min-height en vez de height fija: en una fila con reels, las fotos se
+     estiran a la altura del reel y quedan todas parejas */
+  min-height: 220px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, var(--card-bg), var(--dark));
+  border: 1px dashed rgba(var(--border-rgb), 0.12);
+}
+/* Reels de Instagram: tarjeta vertical 9:16, como en el celular. Las
+   fotos de la misma fila toman su altura. */
+.project-slide.project-slide--reel {
+  width: 220px;
+  height: auto;
+  aspect-ratio: 9 / 16;
+}
+.project-slide img,
+.project-slide video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.project-slide.empty { border-color: rgba(57,255,143,0.2); }
+.project-slide.empty::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Miniaturas de proyecto: clickeables, con fade-in al cargar y overlay
+   con el título al pasar el mouse (o al enfocar con teclado). */
+.project-slide { cursor: pointer; }
+.project-slide:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.project-slide img,
+.project-slide video {
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  will-change: transform;
+}
+.project-slide img.loaded,
+.project-slide video.loaded { opacity: 1; }
+.project-slide:hover img, .project-slide:focus-visible img,
+.project-slide:hover video, .project-slide:focus-visible video { transform: scale(1.06); }
+.project-slide-overlay {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 1.4rem 1rem 0.9rem;
+  background: linear-gradient(to top, rgba(7,7,9,0.85), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.project-slide:hover .project-slide-overlay,
+.project-slide:focus-visible .project-slide-overlay { opacity: 1; }
+.project-slide-title {
+  color: #f4f4f0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+.project-slide-play {
+  position: absolute;
+  top: 0.7rem; right: 0.7rem;
+  width: 1.8rem; height: 1.8rem;
+  border-radius: 50%;
+  background: rgba(7,7,9,0.55);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  backdrop-filter: blur(3px);
+}
+/* Señal de "esto se puede abrir": un "+" fijo arriba a la izquierda de
+   cada miniatura de proyecto. Va siempre visible (no solo al hover) porque
+   en celular no hay hover: es la única pista de que la foto es clickeable. */
+.project-slide-expand {
+  position: absolute;
+  top: 0.7rem; left: 0.7rem;
+  width: 1.8rem; height: 1.8rem;
+  border-radius: 50%;
+  background: rgba(7,7,9,0.55);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1;
+  backdrop-filter: blur(3px);
+  transition: transform var(--transition), background var(--transition);
+}
+.project-slide:hover .project-slide-expand,
+.project-slide:focus-visible .project-slide-expand {
+  transform: scale(1.1);
+  background: rgba(7,7,9,0.75);
+}
+
+/* Flechas sutiles de navegación, inyectadas por JS en cada .carousel */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--border-rgb), 0.15);
+  background: rgba(var(--text-rgb), 0.06);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  backdrop-filter: blur(4px);
+  transition: var(--transition);
+}
+.carousel:hover .carousel-nav,
+.carousel-nav:focus-visible { opacity: 1; }
+.carousel-nav.prev { left: -0.6rem; }
+.carousel-nav.next { right: -0.6rem; }
+.carousel-nav:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.carousel-nav:disabled { opacity: 0 !important; pointer-events: none; }
+.carousel-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 900px) {
+  /* En touch no hay ":hover" que las revele: quedan visibles pero sutiles */
+  .carousel-nav { opacity: 0.55; width: 2rem; height: 2rem; }
+}
+
+/* ===== VISTAS AÉREAS CONOCIDAS ===== */
+.vistas {
+  /* Va "encajada" entre Proyectos y Contacto, las tres con el mismo fondo
+     (var(--black) del body): padding chico arriba y abajo, igual que
+     Servicios→Proyectos, para no acumular espacio vacío de más. */
+  padding: 2.5rem 4rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.vista-slide {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(320px, 78vw);
+  height: 400px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: linear-gradient(135deg, var(--card-bg), var(--dark));
+  border: 1px solid rgba(var(--border-rgb), 0.08);
+}
+.vista-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+.vista-slide:hover img { transform: scale(1.08); }
+.vista-label {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 1.4rem 1.2rem 1.1rem;
+  background: linear-gradient(to top, rgba(7,7,9,0.85), transparent);
+  color: #f4f4f0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.3px;
+  pointer-events: none;
+}
+.vista-slide.empty { border-color: rgba(57,255,143,0.2); }
+.vista-slide.empty .vista-label { display: none; }
+.vista-slide.empty::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ===== CONTACTO ===== */
+.contacto {
+  padding: 7rem 4rem;
+  background: var(--black);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 5rem;
+  align-items: start;
+}
+.contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
+.contact-info p { color: var(--muted); }
+.contact-item {
+  font-size: 0.95rem;
+  color: rgba(var(--text-rgb), 0.85);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--transition);
+}
+a.contact-item:hover { color: var(--accent-text); }
+.social-links { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+.footer-social { justify-content: center; margin-top: 0; }
+.social-links a {
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--muted);
+  padding-bottom: 2px;
+  transition: color var(--transition), border-color var(--transition);
+}
+.social-links a:hover { color: var(--accent-text); border-color: var(--accent-text); }
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  background: var(--card-bg);
+  border: 1px solid rgba(var(--border-rgb), 0.08);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.9rem 1.2rem;
+  width: 100%;
+  transition: border-color var(--transition);
+}
+.contact-form select option { background: var(--card-bg); }
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.contact-form textarea { resize: vertical; }
+.form-status {
+  font-size: 0.88rem;
+  min-height: 1.2em;
+}
+.form-status.success { color: var(--accent-text); }
+.form-status.error { color: #ff6b6b; }
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(var(--border-rgb), 0.05);
+  text-align: center;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.footer-logo span { color: var(--accent-text); }
+.footer p { font-size: 0.8rem; color: var(--muted); }
+
+/* ===== MODAL ===== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--card-bg);
+  border: 1px solid rgba(57,255,143,0.15);
+  border-radius: var(--radius);
+  max-width: 550px;
+  width: 90%;
+  padding: 2.5rem;
+  position: relative;
+  animation: fadeUp 0.3s ease both;
+}
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+.modal-close:hover { color: var(--accent-text); }
+#modal-content { text-align: center; }
+#modal-content h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  letter-spacing: 0.3px;
+  margin-bottom: 1rem;
+  color: var(--accent-text);
+}
+#modal-content p { color: var(--muted); margin-bottom: 0.8rem; line-height: 1.7; }
+#modal-content ul { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+#modal-content ul li::before { content: "→ "; color: var(--accent-text); }
+#modal-content ul li { font-size: 0.92rem; color: rgba(var(--text-rgb), 0.85); }
+
+/* ===== MODAL DE PROYECTO (lightbox) ===== */
+/* Variante más ancha, con la media (imagen/video) pegada a los bordes
+   arriba y el texto con su propio padding abajo. */
+.modal.modal--project {
+  max-width: 780px;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.modal.modal--project .modal-close {
+  background: rgba(7,7,9,0.55);
+  color: #f4f4f0;
+  border-radius: 50%;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0.8rem;
+  right: 0.8rem;
+}
+.modal.modal--project .modal-close:hover { color: var(--accent); }
+.project-modal-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, var(--card-bg), var(--dark));
+  overflow: hidden;
+}
+/* En el modal el reel se ve entero (sin recortar), vertical y centrado */
+.project-modal-media.project-modal-media--reel {
+  aspect-ratio: auto;
+  height: min(60vh, 600px);
+}
+/* Fondo "espacio" detrás de las fotos y reels que no llenan el recuadro:
+   negro profundo con una nebulosa tenue y estrellas que titilan */
+.project-modal-media--reel,
+.project-modal-media--image {
+  background:
+    radial-gradient(ellipse 60% 45% at 18% 22%, rgba(57,255,143,0.10), transparent 70%),
+    radial-gradient(ellipse 55% 50% at 85% 78%, rgba(90,110,255,0.12), transparent 70%),
+    radial-gradient(ellipse 40% 35% at 70% 15%, rgba(170,90,255,0.08), transparent 70%),
+    #030308;
+}
+.project-modal-media--reel::before,
+.project-modal-media--image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 8% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 22% 68%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.5px 1.5px at 35% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 47% 85%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 58% 8%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 66% 52%, rgba(200,255,230,0.9), transparent),
+    radial-gradient(1px 1px at 78% 26%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 88% 62%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 94% 92%, rgba(200,210,255,0.9), transparent),
+    radial-gradient(1px 1px at 4% 88%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 15% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 72% 80%, rgba(255,255,255,0.6), transparent);
+  background-size: 240px 240px;
+  animation: space-twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes space-twinkle {
+  from { opacity: 0.45; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-modal-media--reel::before,
+  .project-modal-media--image::before { animation: none; }
+}
+.project-modal-media.project-modal-media--reel video { object-fit: contain; }
+/* Las fotos también se ven enteras: el recuadro toma la proporción de la
+   imagen (horizontal o vertical) en vez de recortarla a 16:9 */
+.project-modal-media.project-modal-media--image {
+  aspect-ratio: auto;
+}
+.project-modal-media.project-modal-media--image img {
+  position: relative;
+  display: block;
+  height: auto;
+  max-height: min(60vh, 600px);
+  object-fit: contain;
+}
+.project-modal-media.project-modal-media--image.empty { aspect-ratio: 16 / 9; }
+.project-modal-media img,
+.project-modal-media video,
+.project-modal-media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+.project-modal-media.empty::after {
+  content: "Vista previa no disponible";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.project-modal-body { padding: 2.2rem 2.4rem 2.4rem; }
+.project-modal-body h3 { margin-bottom: 1.4rem; }
+.project-modal-meta {
+  color: var(--accent-text) !important;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem !important;
+}
+.project-modal-body p { margin-bottom: 1.4rem; }
+@media (max-width: 600px) {
+  .modal.modal--project { max-width: 94vw; }
+  .project-modal-body { padding: 1.6rem 1.4rem 1.8rem; }
+}
+
+/* ===== SERVICIO DE MARKETING: página flotante =====
+   Overlay independiente del .modal genérico: es más grande, con su propio
+   hero (h2 + imagen) y scrollea internamente, en vez de ser una tarjeta
+   chica de texto. Se abre/cierra con openMarketingPage()/closeMarketingPage()
+   en script.js. */
+.marketing-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+.marketing-overlay.active { display: flex; }
+.marketing-page {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57,255,143,0.32) transparent;
+  background: var(--card-bg);
+  border: 1px solid rgba(57,255,143,0.15);
+  border-radius: var(--radius);
+  animation: fadeUp 0.35s ease both;
+}
+.marketing-page::-webkit-scrollbar { width: 7px; }
+.marketing-page::-webkit-scrollbar-track { background: transparent; margin: 6px 0; }
+.marketing-page::-webkit-scrollbar-thumb {
+  background: rgba(57,255,143,0.28);
+  border-radius: 999px;
+  transition: background var(--transition);
+}
+.marketing-page::-webkit-scrollbar-thumb:hover { background: rgba(57,255,143,0.55); }
+.marketing-close {
+  position: absolute;
+  top: 0.9rem; right: 0.9rem;
+  z-index: 2;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(7,7,9,0.55);
+  border: none;
+  border-radius: 50%;
+  color: #f4f4f0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+.marketing-close:hover { color: var(--accent); }
+
+.marketing-hero {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.marketing-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.marketing-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7,7,9,0.78) 0%, rgba(7,7,9,0.94) 100%);
+}
+.marketing-hero-content {
+  position: relative;
+  padding: 2.2rem 2.4rem;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.6);
+}
+.marketing-hero-content h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 0.3px;
+  color: var(--white);
+  margin: 0.4rem 0 0.8rem;
+}
+.marketing-hero-content p {
+  color: rgba(var(--text-rgb), 0.85);
+  line-height: 1.7;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.marketing-body { padding: 2.2rem 2.4rem 2.6rem; text-align: center; }
+.marketing-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+.marketing-item {
+  background: var(--dark);
+  border: 1px solid rgba(var(--border-rgb), 0.06);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-align: center;
+}
+.marketing-item img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+.marketing-item.empty img { display: none; }
+.marketing-item h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1rem 1.1rem 0.5rem;
+}
+.marketing-item p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 1.1rem 1.1rem;
+}
+@media (max-width: 640px) {
+  .marketing-grid { grid-template-columns: 1fr; }
+  .marketing-hero-content, .marketing-body { padding-left: 1.4rem; padding-right: 1.4rem; }
+  .marketing-hero { min-height: 220px; }
+}
+
+/* ===== CHATBOT WIDGET ===== */
+/* Antes vivía como estilos inline dentro de chatbot.js; acá usa las mismas
+   variables que el resto del sitio, así que un cambio de color de marca
+   solo hay que hacerlo en un lugar (===== VARIABLES ===== arriba). */
+#hm-chat-widget {
+  position: fixed;
+  bottom: 6.75rem;
+  right: 2rem;
+  z-index: 998;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 12px;
+}
+#hm-chat-launcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--black);
+  border: 1px solid rgba(57,255,143,0.35);
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(57,255,143,0.4);
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.2s, border-color 0.2s;
+}
+#hm-chat-launcher:hover { transform: scale(1.08); border-color: var(--accent); }
+#hm-chat-widget.open #hm-chat-launcher { display: none; }
+
+/* Logo del dron (solo el ícono, sin el texto "HÉLICEDRONE") como imagen
+   del botón del chat, con un leve balanceo tipo "flotando" en vez del
+   vuelo animado que tenía el SVG dibujado a mano. */
+#hm-chat-launcher .hm-drone-icon {
+  width: 34px;
+  height: auto;
+  transform-origin: center;
+  animation: hm-drone-hover 2.6s ease-in-out infinite;
+}
+@keyframes hm-drone-hover {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  22%  { transform: translate(0.8px, -2.4px) rotate(-4deg); }
+  48%  { transform: translate(-0.6px, -0.8px) rotate(3deg); }
+  74%  { transform: translate(0.5px, -1.8px) rotate(-2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hm-chat-launcher .hm-drone-icon { animation: none; }
+}
+#hm-chat-badge {
+  position: absolute;
+  top: -3px; right: -3px;
+  width: 19px; height: 19px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border: 2px solid var(--black);
+}
+#hm-chat-box {
+  display: none;
+  flex-direction: column;
+  width: 310px;
+  background: var(--dark);
+  border: 1px solid rgba(57,255,143,0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+#hm-chat-widget.open #hm-chat-box { display: flex; }
+.hm-chat-header {
+  background: var(--accent);
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.hm-chat-header-info { display: flex; align-items: center; gap: 10px; }
+.hm-chat-dot { width: 8px; height: 8px; background: var(--ink); border-radius: 50%; opacity: 0.6; }
+.hm-chat-title { color: var(--ink); font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
+.hm-chat-close { background: none; border: none; color: var(--ink); font-size: 18px; cursor: pointer; line-height: 1; opacity: 0.6; }
+.hm-chat-close:hover { opacity: 1; }
+.hm-chat-subbar {
+  padding: 10px 14px;
+  background: var(--card-bg);
+  border-bottom: 1px solid rgba(57,255,143,0.08);
+  font-size: 11px;
+  color: var(--accent-text);
+  letter-spacing: 1px;
+}
+#hm-chat-messages {
+  height: 260px;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(57,255,143,0.13) transparent;
+  background: var(--dark);
+}
+.hm-msg { padding: 9px 14px; border-radius: 14px; font-size: 13px; max-width: 82%; line-height: 1.5; }
+.hm-msg-user { background: var(--accent); color: var(--ink); border-radius: 14px 14px 3px 14px; align-self: flex-end; }
+.hm-msg-bot { background: var(--card-bg); color: var(--white); border: 1px solid rgba(57,255,143,0.12); border-radius: 14px 14px 14px 3px; align-self: flex-start; }
+.hm-typing { color: var(--accent-text); font-size: 12px; padding: 4px 2px; align-self: flex-start; }
+/* Chips de respuesta rápida (ej: "¿Servicio Aéreo o de Marketing?") */
+.hm-quick-replies { display: flex; flex-wrap: wrap; gap: 6px; align-self: flex-start; max-width: 90%; }
+.hm-quick-reply-btn {
+  background: none;
+  border: 1px solid rgba(57,255,143,0.4);
+  color: var(--accent-text);
+  border-radius: 50px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.hm-quick-reply-btn:hover { background: var(--accent); color: var(--ink); }
+.hm-chat-inputrow {
+  padding: 12px;
+  border-top: 1px solid rgba(57,255,143,0.1);
+  display: flex;
+  gap: 8px;
+  background: var(--dark);
+}
+#hm-chat-input {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1px solid rgba(57,255,143,0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--white);
+  font-size: 13px;
+  outline: none;
+  font-family: var(--font-body);
+}
+#hm-chat-input:focus { border-color: var(--accent); }
+.hm-chat-send {
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 15px;
+  transition: opacity 0.2s;
+}
+.hm-chat-send:hover { opacity: 0.85; }
+.hm-chat-footer {
+  padding: 8px 14px;
+  text-align: center;
+  background: var(--black);
+  border-top: 1px solid rgba(var(--border-rgb), 0.04);
+  font-size: 10px;
+  color: var(--muted);
+}
+.hm-chat-footer a { color: var(--accent-text); text-decoration: none; }
+.hm-chat-footer a:hover { text-decoration: underline; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+/* Si el usuario pidió reducir movimiento, se frenan todas las animaciones/transiciones */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .navbar { padding: 1rem 1.5rem; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(2) { border-right: none; }
+  .servicios { padding: 4rem 1.5rem 2rem; }
+  .proyectos { padding: 2rem 1.5rem; }
+  .project-slide { width: 82vw; }
+  .project-slide.project-slide--reel { width: 58vw; }
+  .detras { padding: 2rem 1.5rem; }
+  .about-card { width: 82vw; min-height: 0; }
+  .about-card-body { padding: 1.4rem 1.4rem 1.6rem; }
+  .vistas { padding: 2rem 1.5rem; }
+  .vista-slide { width: 82vw; height: 320px; }
+  .contacto { padding: 4rem 1.5rem; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+  .section-header { margin-bottom: 2.5rem; }
+  .whatsapp-float { bottom: 1.2rem; right: 1.2rem; width: 52px; height: 52px; }
+  .whatsapp-float svg { width: 52px; height: 52px; }
+  /* Reacomoda el widget del chat en mobile, por encima del botón de
+     WhatsApp, que en esta resolución es más chico y está más abajo. */
+  #hm-chat-widget { bottom: 5.3rem; right: 1.2rem; }
+  #hm-chat-box { width: min(310px, calc(100vw - 2.4rem)); }
+  /* En celular acostado (poca altura) la caja de chat con 260px fijos de
+     mensajes podía asomar arriba de la pantalla; se limita a la altura real. */
+  #hm-chat-messages { max-height: 42vh; }
+}
+@media (max-width: 500px) {
+  .hero-title { font-size: 3.5rem; }
+  /* En celulares muy angostos el logo + los 2 botones circulares del navbar
+     quedan muy justos: se achican un poco para que entren cómodos. */
+  .navbar { padding: 0.8rem 1rem; }
+  .nav-logo { font-size: 1.15rem; gap: 0.35rem; }
+  .logo-drone { height: 26px; width: auto; }
+  .nav-toggle { width: 36px; height: 36px; font-size: 1.1rem; }
+  .navbar-actions { gap: 0.4rem; }
+}
+
+/* ===== DETRÁS DEL SISTEMA (sección personal, tarjetas de texto) =====
+   Mismo patrón de carrusel que .servicios/.vistas, pero con tarjetas de
+   puro texto en vez de foto: a propósito, para que la parte "sobre mí"
+   no se sienta como un bloque largo de párrafos sino como piezas cortas
+   y hojeables, igual que el resto del sitio. */
+.detras {
+  padding: 2.5rem 4rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.about-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  width: min(300px, 80vw);
+  min-height: 340px;
+  scroll-snap-align: start;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(var(--border-rgb), 0.06);
+  transition: transform var(--transition), border-color var(--transition);
+  will-change: transform;
+}
+.about-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(57,255,143,0.2);
+}
+/* Foto real de un trabajo propio como cabecera de cada tarjeta (no un
+   stock genérico): mismo patrón visual que .card-img en Servicios. */
+.about-card-img {
+  height: 130px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+  overflow: hidden;
+}
+.about-card:hover .about-card-img { transform: scale(1.06); }
+.about-card-body {
+  padding: 1.5rem 1.8rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+  align-items: center;
+}
+.about-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.7rem;
+}
+.about-card p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ===== AJUSTES MOVIL / PC =====
+   Pulido final de responsive: alturas dinámicas en celular, hover solo donde
+   existe mouse (en touch quedaba "pegado" tras un toque), modales que
+   scrollean si no entran y tamaños de fuente que evitan el zoom de iOS. */
+html, body { overflow-x: hidden; }
+img, video { max-width: 100%; }
+.hero { height: 100vh; height: 100svh; }
+.sidebar { width: min(300px, 88vw); }
+.modal-overlay { padding: 1rem; }
+.modal { max-height: 90vh; max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; }
+
+/* Pantallas grandes: el contenido no se estira de más */
+@media (min-width: 1600px) {
+  .servicios, .proyectos, .detras, .vistas { max-width: 1500px; }
+  .contacto { max-width: 1400px; }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 900px) {
+  .card, .about-card { width: min(300px, 46vw); }
+  .project-slide { width: min(340px, 60vw); }
+  .project-slide.project-slide--reel { width: min(220px, 38vw); }
+  .vista-slide { width: min(320px, 46vw); }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .hero-content { padding: 1.5rem 1.2rem; }
+  .hero-sub { font-size: 1rem; margin-bottom: 2rem; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .hero-cta > * { width: min(280px, 100%); text-align: center; }
+  .stat { padding: 1.8rem 0.5rem; }
+  .stat-num { font-size: 2.3rem; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 1px; text-align: center; }
+  .modal { width: 100%; padding: 2rem 1.4rem; }
+  #modal-content h3 { font-size: 1.4rem; }
+  .footer { padding: 2rem 1.2rem; }
+  .contact-form input, .contact-form select, .contact-form textarea { font-size: 16px; }
+  #hm-chat-input, .hm-chat-input input { font-size: 16px; }
+  .marketing-overlay { padding: 1rem 0.6rem; }
+}
+@media (max-width: 380px) {
+  .hero-title { font-size: 2.8rem; }
+  .card, .about-card { width: 86vw; }
+}
+
+/* Hover solo con mouse: en touch no se queda el efecto después de tocar */
+@media (hover: none) {
+  .card:hover, .about-card:hover, .btn-primary:hover, .btn-ghost:hover { transform: none; }
+  .card:hover .card-img, .about-card:hover .about-card-img,
+  .project-slide:hover video, .vista-slide:hover img { transform: none; }
+}
